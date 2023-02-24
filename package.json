@@ -1,0 +1,11 @@
+{
+  "name": "QA-Challenge",
+  "version": "1.0.0",
+  "description": "Q.A Challenge Luma Store",
+  "main": "index.js",
+  "author": "Marcos H Pereira Jr",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^12.6.0"
+  }
+}
