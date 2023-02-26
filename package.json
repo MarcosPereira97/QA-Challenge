@@ -6,6 +6,7 @@
   "author": "Marcos H Pereira Jr",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^12.6.0"
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "12.7.0"
   }
 }
