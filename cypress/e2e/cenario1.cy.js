@@ -1,18 +1,43 @@
 /// <reference types="cypress" />
 import { faker } from '@faker-js/faker';
-describe('cenario 1', () => {
 
-  context('compra de produto', () => {
+describe('desafio qa', () => {
+  context('cenario 1', () => {
+
+    const firstName = faker.name.firstName()
+    const lastName = faker.name.lastName()
+    const email = faker.internet.email(firstName, lastName)
+    const password = faker.internet.password() + ('*')
+    const street = faker.address.street()
+    const city = faker.address.city()
+    const zipcode = faker.address.zipCode()
+    const phone = faker.phone.number()
 
     beforeEach(() => {
       cy.visit('/')
     });
 
     it('deve estar na página Luma Store', () => {
+
       cy.title()
-        .should('contain', 'Home Page - Magento eCommerce - website to practice selenium')
+        .should('contain', 'Home Page - Magento eCommerce')
+
+      cy.accessCreateAccount()
+      cy.formCreateAccount(firstName, lastName, email, password)
+
+      cy.contains('button', 'Create an Account')
+        .click()
+
+      cy.get('.message-success')
+        .should('be.visible')
+
       cy.get('#search')
-        .type('shirt', '{enter}')
+        .type('shirt')
+
+      cy.get('#qs-option-7 > .qs-option-name')
+        .should('be.visible')
+        .click()
+
       cy.get('div[class*=products-grid]')
         .should('be.visible')
 
@@ -20,20 +45,8 @@ describe('cenario 1', () => {
         .first()
         .click()
 
-      cy.get('.product-add-form')
-        .wait(1000)
-        .within(() => {
-          cy.get('div')
-            .contains('M')
-            .click()
-
-          cy.get('#option-label-color-93-item-50')
-            .click()
-          cy.contains('button', 'Add to Cart')
-            .click()
-            .should('contain.text', 'Adding...')
-            .wait(2000)
-        })
+      cy.selectClothingSet('XL')
+      cy.addProdutToCart()
 
       cy.get('.message-success')
         .should('be.visible')
@@ -44,40 +57,10 @@ describe('cenario 1', () => {
         .wait(2000)
         .click()
 
-      const firstName = faker.name.firstName()
-      const lastName = faker.name.lastName()
-
       cy.get('.loader > img')
         .should('be.visible')
 
-      cy.get('#checkout-step-shipping')
-        .within(() => {
-          cy.get('input[name=username]')
-            .should('be.visible')
-            .type(faker.internet.email(firstName, lastName))
-          cy.get('input[name=firstname]')
-            .should('be.visible')
-            .type(firstName)
-          cy.get('input[name=lastname]')
-            .should('be.visible')
-            .type(lastName)
-          cy.get('input[name*=street]')
-            .first()
-            .should('be.visible')
-            .type(faker.address.street())
-          cy.get('input[name=city]')
-            .should('be.visible')
-            .type(faker.address.city())
-          cy.get('select[name=region_id]')
-            .select(Cypress._.random(2, 39))
-            .should('be.visible')
-          cy.get('input[name=postcode]')
-            .should('be.visible')
-            .type(faker.address.zipCode())
-          cy.get('input[name=telephone]')
-            .should('be.visible')
-            .type(faker.phone.number())
-        })
+      cy.formCheckout(street, city, zipcode, phone)
 
       cy.get('.loader > img')
         .should('be.visible')
@@ -106,6 +89,12 @@ describe('cenario 1', () => {
 
       cy.get('h1 span')
         .should('have.text', 'Thank you for your purchase!')
+    })
+
+    it.only('produto aleatorio moda masculina', () => {
+      //cy.backHome()
+      cy.navigation()
+
     })
   })
 })
