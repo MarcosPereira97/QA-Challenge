@@ -40,10 +40,10 @@ describe('Desafio QA', () => {
         .and('be.visible')
       cy.searchProductAndSelect('shirt')
       cy.selectFirstProduct()
-      if (cy.get('.product-options-wrapper' !== true)) {
-        cy.selectClothingSet('XS')
+      if (cy.contains('h1', 'Harmony Lumaflex')) {
         cy.addProdutToCart()
       } else {
+        cy.selectClothingSet('XS')
         cy.addProdutToCart()
       }
       cy.accessingCart()

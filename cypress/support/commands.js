@@ -46,7 +46,7 @@ Cypress.Commands.add('addProdutToCart', () => {
     cy.contains('button', 'Add to Cart')
         .click()
         .should('contain.text', 'Adding...')
-        .wait(2000)
+        .wait(3000)
 })
 Cypress.Commands.add('formCheckout', (street, city, zipcode, phone) => {
     cy.get('#checkout-step-shipping')
