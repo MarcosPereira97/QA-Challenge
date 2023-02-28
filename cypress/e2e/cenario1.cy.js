@@ -2,6 +2,7 @@
 import { faker } from '@faker-js/faker';
 
 describe('desafio qa', () => {
+
   context('cenario 1', () => {
 
     const firstName = faker.name.firstName()
@@ -12,89 +13,51 @@ describe('desafio qa', () => {
     const city = faker.address.city()
     const zipcode = faker.address.zipCode()
     const phone = faker.phone.number()
+    const summary = faker.lorem.word(5)
+    const review = faker.lorem.paragraph()
 
     beforeEach(() => {
       cy.visit('/')
     });
 
     it('deve estar na página Luma Store', () => {
-
       cy.title()
         .should('contain', 'Home Page - Magento eCommerce')
-
       cy.accessCreateAccount()
       cy.formCreateAccount(firstName, lastName, email, password)
-
-      cy.contains('button', 'Create an Account')
-        .click()
-
       cy.get('.message-success')
-        .should('be.visible')
-
-      cy.get('#search')
-        .type('shirt')
-
-      cy.get('#qs-option-7 > .qs-option-name')
-        .should('be.visible')
-        .click()
-
-      cy.get('div[class*=products-grid]')
-        .should('be.visible')
-
-      cy.get('li[class*=product-item]')
-        .first()
-        .click()
-
-      cy.selectClothingSet('XL')
+        .should('contain', 'Thank you for registering with Fake Online Clothing Store.')
+        .and('be.visible')
+      cy.AddingMenProducts()
+      cy.selectLastProduct()
+      cy.selectClothingSet('33')
       cy.addProdutToCart()
-
       cy.get('.message-success')
         .should('be.visible')
-        .contains('a', 'shopping cart')
-        .click()
-
-      cy.get('.checkout-methods-items > :nth-child(1) > .action > span')
-        .wait(2000)
-        .click()
-
+      cy.reviewProduct(summary, review)
+      cy.get('.message-success')
+        .should('contain', 'You submitted your review for moderation.')
+        .and('be.visible')
+      cy.searchProductAndSelect('shirt')
+      cy.selectFirstProduct()
+      if (cy.get('.product-options-wrapper' !== true)) {
+        cy.selectClothingSet('XS')
+        cy.addProdutToCart()
+      } else {
+        cy.addProdutToCart()
+      }
+      cy.accessingCart()
       cy.get('.loader > img')
         .should('be.visible')
-
       cy.formCheckout(street, city, zipcode, phone)
-
+      cy.selectShipping()
+      cy.accessingCheckout()
       cy.get('.loader > img')
         .should('be.visible')
-        .as('loader')
-
-      cy.get('input[class*=radio]')
-        .first()
-        .click()
-
-      cy.contains('button', 'Next')
-        .click()
-
-      cy.get('.opc-progress-bar')
-        .should('contain.text', 'Review & Payments')
-        .and('be.visible')
-
-      cy.get('.loader > img')
-        .should('be.visible')
-
-      cy.get('div[class*=payment-method-title]')
-        .should('contains.text', 'Check / Money order')
-
-      cy.get('button[class*=checkout]')
-        .and('be.visible')
-        .click()
-
+      cy.finishingPurchase()
       cy.get('h1 span')
         .should('have.text', 'Thank you for your purchase!')
-    })
-
-    it.only('produto aleatorio moda masculina', () => {
-      //cy.backHome()
-      cy.navigation()
-
+        .and('be.visible')
     })
   })
 })

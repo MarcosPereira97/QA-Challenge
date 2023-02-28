@@ -4,5 +4,6 @@ cypress/fixtures/stories.json
 cypress/screenshots/
 cypress/videos/
 node_modules/
+allure-results/
 *package-lock.json
 *package.json
