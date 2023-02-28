@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 import { faker } from '@faker-js/faker';
 
-describe('desafio qa', () => {
+describe('Desafio QA', () => {
 
-  context('cenario 1', () => {
+  context('Q.A Challenge Luma Store', () => {
 
     const firstName = faker.name.firstName()
     const lastName = faker.name.lastName()
@@ -20,7 +20,7 @@ describe('desafio qa', () => {
       cy.visit('/')
     });
 
-    it('deve estar na página Luma Store', () => {
+    it('Fluxo E2E Luma Store', () => {
       cy.title()
         .should('contain', 'Home Page - Magento eCommerce')
       cy.accessCreateAccount()
