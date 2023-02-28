@@ -1,8 +1,5 @@
 # Desafio Coodesh 
 
-Desafio desenvolvido utilizando o framework Cypress
-
-
 #### Tecnologias:
 
 Framework: Cypress
