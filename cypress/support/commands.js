@@ -20,7 +20,8 @@ Cypress.Commands.add('formCreateAccount', (firstName, lastName, email, password)
     cy.contains('button', 'Create an Account').click()
 })
 Cypress.Commands.add('searchProductAndSelect', (product) => {
-    cy.get('#search').type(product)
+    cy.get('#search')
+        .type(product)
 
     cy.get('#qs-option-7 > .qs-option-name')
         .should('be.visible')
@@ -33,20 +34,26 @@ Cypress.Commands.add('selectFirstProduct', () => {
         .first()
         .click()
 })
-Cypress.Commands.add('selectClothingSet', (size) => {
-    cy.get('.product-add-form')
-        .wait(2000)
+Cypress.Commands.add('selectClothingSet', (size, color) => {
+    cy.get('div[attribute-code=size]')
         .within(() => {
-            cy.get('div').contains(size).click()
-
-            cy.get('#option-label-color-93-item-52').click()
+            cy.get('div[class*=swatch-option]')
+                .first()
+                .click()
         })
+    cy.get('div[attribute-code=color]')
+        .within(() => {
+            cy.get('div[class*=swatch-option]')
+                .first()
+                .click()
+        })
+
+
 })
 Cypress.Commands.add('addProdutToCart', () => {
     cy.contains('button', 'Add to Cart')
         .click()
         .should('contain.text', 'Adding...')
-        .wait(3000)
 })
 Cypress.Commands.add('formCheckout', (street, city, zipcode, phone) => {
     cy.get('#checkout-step-shipping')
@@ -68,17 +75,7 @@ Cypress.Commands.add('formCheckout', (street, city, zipcode, phone) => {
                 .should('be.visible')
                 .type(phone)
         })
-})
-Cypress.Commands.add('accessingCart', () => {
-    cy.get('.message-success')
-        .should('be.visible')
-        .contains('a', 'shopping cart')
-        .click()
-
-    cy.get('.checkout-methods-items > :nth-child(1) > .action > span')
-        .wait(2000)
-        .click()
-
+    cy.selectShipping()
 })
 Cypress.Commands.add('selectShipping', () => {
     cy.get('.loader > img').should('be.visible').as('loader')
@@ -86,6 +83,19 @@ Cypress.Commands.add('selectShipping', () => {
     cy.get('input[class*=radio]')
         .first()
         .click()
+})
+Cypress.Commands.add('accessingCart', () => {
+    cy.get('.message-success')
+        .should('be.visible')
+        .contains('a', 'shopping cart')
+        .click()
+
+    cy.get('.sub > .amount')
+        .should(`be.visible`)
+
+    cy.get('.checkout-methods-items > :nth-child(1) > .action > span')
+        .click({ force: true })
+
 })
 Cypress.Commands.add('accessingCheckout', () => {
     cy.contains('button', 'Next')
@@ -97,7 +107,6 @@ Cypress.Commands.add('accessingCheckout', () => {
 })
 Cypress.Commands.add('finishingPurchase', () => {
     cy.get('div[class*=payment-method-title]')
-        .wait(1500)
         .should('contains.text', 'Check / Money order')
 
     cy.get('button[class*=checkout]')
@@ -114,22 +123,21 @@ Cypress.Commands.add('selectLastProduct', () => {
 Cypress.Commands.add('reviewProduct', (summary, review) => {
     const ratings = Cypress._.random(1, 5)
 
-    cy.contains('a', 'Add Your Review')
+    cy.get('.reviews-actions > .action')
         .click()
-    cy.get('div[id=product-review-container]')
-        .should('be.visible')
     cy.get('.review-form')
         .within(() => {
+            cy.get(`label[class*=rating-${ratings}]`)
+                .click({ force: true })
             cy.get('input[name=nickname]')
                 .should('be.visible')
             cy.get('input[name=title]')
                 .should('be.visible')
+                .wait(1000)
                 .type(summary)
             cy.get('div[class*=review-field-text]')
                 .should('be.visible')
                 .type(review)
-            cy.get(`label[class*=rating-${ratings}]`)
-                .click({ force: true })
         })
     cy.contains('button', 'Submit Review')
         .click()

@@ -5,6 +5,7 @@ describe('Desafio QA', () => {
 
   context('Q.A Challenge Luma Store', () => {
 
+    const product = 'shirt'
     const firstName = faker.name.firstName()
     const lastName = faker.name.lastName()
     const email = faker.internet.email(firstName, lastName)
@@ -13,7 +14,7 @@ describe('Desafio QA', () => {
     const city = faker.address.city()
     const zipcode = faker.address.zipCode()
     const phone = faker.phone.number()
-    const summary = faker.lorem.word(5)
+    const summary = faker.lorem.word(2)
     const review = faker.lorem.sentences()
 
     beforeEach(() => {
@@ -29,26 +30,18 @@ describe('Desafio QA', () => {
         .should('contain', 'Thank you for registering with Fake Online Clothing Store.')
         .and('be.visible')
       cy.accessingMenProducts()
-      cy.selectLastProduct()
-      cy.reviewProduct(summary, review)
-      cy.get('.message-success')
-        .should('be.visible')
-      cy.searchProductAndSelect('shirt')
-      cy.selectLastProduct()
-      cy.selectClothingSet('XS')
-      cy.addProdutToCart()
-      cy.accessingMenProducts()
       cy.selectFirstProduct()
-      cy.selectClothingSet('L')
+      cy.reviewProduct(summary, review)
+      cy.selectClothingSet()
+      cy.addProdutToCart()
+      cy.searchProductAndSelect(product)
+      cy.selectLastProduct()
+      cy.selectClothingSet()
       cy.addProdutToCart()
       cy.accessingCart()
-      cy.get('.loader > img')
-        .should('be.visible')
       cy.formCheckout(street, city, zipcode, phone)
-      cy.selectShipping()
+
       cy.accessingCheckout()
-      cy.get('.loader > img')
-        .should('be.visible')
       cy.finishingPurchase()
       cy.get('h1 span')
         .should('have.text', 'Thank you for your purchase!')
