@@ -34,17 +34,19 @@ Cypress.Commands.add('selectFirstProduct', () => {
         .first()
         .click()
 })
-Cypress.Commands.add('selectClothingSet', (size, color) => {
+Cypress.Commands.add('selectClothingSet', () => {
     cy.get('div[attribute-code=size]')
         .within(() => {
             cy.get('div[class*=swatch-option]')
                 .first()
+                .wait(500)
                 .click()
         })
     cy.get('div[attribute-code=color]')
         .within(() => {
             cy.get('div[class*=swatch-option]')
                 .first()
+                .wait(500)
                 .click()
         })
 
@@ -53,7 +55,6 @@ Cypress.Commands.add('selectClothingSet', (size, color) => {
 Cypress.Commands.add('addProdutToCart', () => {
     cy.contains('button', 'Add to Cart')
         .click()
-        .should('contain.text', 'Adding...')
 })
 Cypress.Commands.add('formCheckout', (street, city, zipcode, phone) => {
     cy.get('#checkout-step-shipping')

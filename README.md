@@ -27,7 +27,7 @@ yarn add cypress --dev
 
 ## Allure-Reports
 
-O report utilizado um plugin desenvolvido por um terceiro: [Allure-Reports](<https://github.com/Shelex/cypress-allure-plugin>).
+O report utilizado é um plugin desenvolvido por um terceiro: [Shelex/cypress-allure-plugin](<https://github.com/Shelex/cypress-allure-plugin>).
 
 Necessita instalar o JAVA e executar o comando abaixo para instalar o plugin do Allure-reports
 

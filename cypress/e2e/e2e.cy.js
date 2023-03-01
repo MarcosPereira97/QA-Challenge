@@ -19,7 +19,7 @@ describe('Desafio QA', () => {
 
     beforeEach(() => {
       cy.visit('/')
-    });
+    })
 
     it('Fluxo E2E Luma Store', () => {
       cy.title()
@@ -40,7 +40,6 @@ describe('Desafio QA', () => {
       cy.addProdutToCart()
       cy.accessingCart()
       cy.formCheckout(street, city, zipcode, phone)
-
       cy.accessingCheckout()
       cy.finishingPurchase()
       cy.get('h1 span')
