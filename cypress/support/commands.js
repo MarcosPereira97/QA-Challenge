@@ -39,7 +39,7 @@ Cypress.Commands.add('selectClothingSet', (size) => {
         .within(() => {
             cy.get('div').contains(size).click()
 
-            cy.get('#option-label-color-93-item-50').click()
+            cy.get('#option-label-color-93-item-52').click()
         })
 })
 Cypress.Commands.add('addProdutToCart', () => {
