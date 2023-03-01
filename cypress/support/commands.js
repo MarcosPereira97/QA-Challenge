@@ -104,11 +104,7 @@ Cypress.Commands.add('finishingPurchase', () => {
         .and('be.visible')
         .click()
 })
-Cypress.Commands.add('backHome', () => {
-    cy.get('.logo')
-        .click()
-})
-Cypress.Commands.add('AddingMenProducts', () => {
+Cypress.Commands.add('accessingMenProducts', () => {
     cy.get('#ui-id-5').click()
 })
 Cypress.Commands.add('selectLastProduct', () => {
@@ -137,4 +133,7 @@ Cypress.Commands.add('reviewProduct', (summary, review) => {
         })
     cy.contains('button', 'Submit Review')
         .click()
+    cy.get('.message-success')
+        .should('contain', 'You submitted your review for moderation.')
+        .and('be.visible')
 })
