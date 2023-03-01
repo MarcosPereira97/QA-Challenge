@@ -14,7 +14,7 @@ describe('Desafio QA', () => {
     const zipcode = faker.address.zipCode()
     const phone = faker.phone.number()
     const summary = faker.lorem.word(5)
-    const review = faker.lorem.paragraph()
+    const review = faker.lorem.sentences()
 
     beforeEach(() => {
       cy.visit('/')
@@ -34,18 +34,15 @@ describe('Desafio QA', () => {
       cy.addProdutToCart()
       cy.get('.message-success')
         .should('be.visible')
-      cy.reviewProduct(summary, review)
-      cy.get('.message-success')
-        .should('contain', 'You submitted your review for moderation.')
-        .and('be.visible')
+
       cy.searchProductAndSelect('shirt')
       cy.selectFirstProduct()
-      if ('span', 'Harmony Lumaflex' === true) {
-        cy.addProdutToCart()
-      } else {
-        cy.selectClothingSet('XS')
-        cy.addProdutToCart()
-      }
+      cy.reviewProduct(summary, review)
+      cy.get('.message-success')
+      .should('contain', 'You submitted your review for moderation.')
+      .and('be.visible')
+      cy.selectClothingSet('XS')
+      cy.addProdutToCart()
       cy.accessingCart()
       cy.get('.loader > img')
         .should('be.visible')
