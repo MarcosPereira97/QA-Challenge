@@ -49,7 +49,7 @@ yarn add -D @shelex/cypress-allure-plugin
 Para ativar a gravação de resultados do Allure, basta passar a variável de ambiente `allure=true`, por exemplo:
 
 ```Bash
-yarn cypress run --env allure=true
+yarn cypress open --env allure=true
 ```
 
 ## Executando os testes
