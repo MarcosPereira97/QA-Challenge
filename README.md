@@ -29,7 +29,7 @@ yarn add cypress --dev
 
 O report utilizado é um plugin desenvolvido por um terceiro: [Shelex/cypress-allure-plugin](<https://github.com/Shelex/cypress-allure-plugin>).
 
-Necessita instalar o JAVA e executar o comando abaixo para instalar o plugin do Allure-reports
+Necessita instalação do JAVA e configuração do JAVA_HOME nas variáveis de ambiente, após finalizado executar o comando abaixo para iniciar a instalação do plugin.
 
 - [Java 18](<https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html>)
 
@@ -48,7 +48,7 @@ yarn add -D @shelex/cypress-allure-plugin
 
 Para ativar a gravação de resultados do Allure, basta passar a variável de ambiente `allure=true`, por exemplo:
 
-```bash
+```Bash
 yarn cypress run --env allure=true
 ```
 
@@ -56,9 +56,15 @@ yarn cypress run --env allure=true
 
 Após tudo instalado e devidamente configurado basta rodar os comandos no terminal para executar os testes:
 
+Para executar em modo gráfico execute o comando abaixo:
+
+```Bash
+yarn cypress open
+```
+
 Para executar em modo headless execute o comando abaixo:
 
-```Javascript
+```Bash
 yarn cypress run
 ```
 
