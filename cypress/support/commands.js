@@ -97,6 +97,7 @@ Cypress.Commands.add('accessingCheckout', () => {
 })
 Cypress.Commands.add('finishingPurchase', () => {
     cy.get('div[class*=payment-method-title]')
+        .wait(1500)
         .should('contains.text', 'Check / Money order')
 
     cy.get('button[class*=checkout]')

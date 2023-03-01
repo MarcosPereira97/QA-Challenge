@@ -40,7 +40,7 @@ describe('Desafio QA', () => {
         .and('be.visible')
       cy.searchProductAndSelect('shirt')
       cy.selectFirstProduct()
-      if (cy.contains('h1', 'Harmony Lumaflex')) {
+      if ('span', 'Harmony Lumaflex' === true) {
         cy.addProdutToCart()
       } else {
         cy.selectClothingSet('XS')
