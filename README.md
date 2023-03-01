@@ -1,4 +1,4 @@
-# Desafio Coodesh 
+# Q.A Challenge Luma Store 
 
 #### Tecnologias:
 
